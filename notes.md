@@ -16,3 +16,17 @@
 
 # show field items
 <br> db.dress.distinct("category")
+
+# Set and unset 
+Her  dokumana a field eklemek için set
+db.user_information.update({},
+                          {$set : {"proper_job":""}},
+                          {upsert:false,
+                          multi:true}) 
+                          
+                          
+Her dokumandan istenen fieldı siler
+db.user_information.update({},
+                          {$unset : {"proper_job":1}},
+                          {upsert:false,
+                          multi:true}) 
