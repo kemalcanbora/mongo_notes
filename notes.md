@@ -30,3 +30,17 @@ db.user_information.update({},
                           {$unset : {"proper_job":1}},
                           {upsert:false,
                           multi:true}) 
+
+# Find duplucate
+
+db.users.aggregate([
+  { $group: { 
+    _id: { firstField: "$UserLinkedinUrl", secondField: "$UserLinkedinUrl" }, 
+    uniqueIds: { $addToSet: "$_id" },
+    count: { $sum: 1 } 
+  }}, 
+  { $match: { 
+    count: { $gt: 1 } 
+  }}
+])
+ 
